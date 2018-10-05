@@ -38,6 +38,11 @@
   (package-install 'use-package))
 (require 'use-package)
 
+;; Install material-theme if not installed and enable it
+(unless (package-installed-p 'material-theme)
+  (package-install 'material-theme))
+(load-theme 'material t)
+
 ;; Enable evil
 (use-package evil
   :demand)
@@ -116,6 +121,12 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (windmove-default-keybindings)
+(visual-line-mode)
+
+;; 80 column rule
+(require 'whitespace)
+(setq whitespace-style '(face empty tabs lines-tail trailing))
+(global-whitespace-mode t)
 
 ;; Relative line numbers
 (require 'linum-relative)
