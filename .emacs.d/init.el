@@ -1,8 +1,10 @@
-;;; package -- Emacs init file
+;; package -- Emacs init file
 ;;; Commentary:
 ;; Basic Emacs init values
 
 ;;; Code:
+;; show-paren-delay 0.5
+;; use-package-always-ensure t
 ;; global variables
 (setq
  inhibit-startup-screen t
@@ -10,8 +12,6 @@
  make-backup-files nil
  column-number-mode t
  scroll-error-top-bottom t
- show-paren-delay 0.5
- use-package-always-ensure t
  sentence-end-double-space nil)
 
 ;; buffer local variables
@@ -42,6 +42,9 @@
 (unless (package-installed-p 'material-theme)
   (package-install 'material-theme))
 (load-theme 'material t)
+
+;; Install elpy (python package) if not installed and enable it
+(elpy-enable)
 
 ;; Enable evil
 (use-package evil
