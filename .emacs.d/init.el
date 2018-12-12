@@ -20,6 +20,8 @@
  tab-width 4
  c-basic-offset 4)
 
+(server-start)
+
 ;; global keybindings
 
 
@@ -114,6 +116,26 @@
   :ensure t
   :pin melpa-stable)
 
+;; Install matlab-mode if not installed and enable it
+(unless (package-installed-p 'matlab-mode)
+  (package-install 'matlab-mode))
+(autoload 'matlab-mode "matlab" "Matlab Editing Mode" t)
+(add-to-list
+  'auto-mode-alist
+  '("\\.m$" . matlab-mode))
+(matlab-cedet-setup)
+
+
+;; Enable neotree
+(use-package neotree)
+(global-set-key [f8] 'neotree-toggle)
+
+;; Sublime style
+(use-package sublimity)
+(use-package sublimity-scroll)
+(use-package sublimity-map)
+(use-package sublimity-attractive)
+(sublimity-mode 1)
 
 
 ;; modes
@@ -128,7 +150,7 @@
 
 ;; 80 column rule
 (require 'whitespace)
-(setq whitespace-style '(face empty tabs lines-tail trailing))
+(setq whitespace-style '(face tabs lines-tail trailing))
 (global-whitespace-mode t)
 
 ;; Relative line numbers
@@ -136,6 +158,11 @@
 (linum-mode)
 (linum-relative-global-mode)
 (setq linum-relative-current-symbol "")
+
+(add-hook 'html-mode-hook
+    (lambda ()
+        ;; Set indentation to 4.
+        (set (make-local-variable 'sgml-basic-offset) 2)))
 
 ;; Stuff added by Custonm
 
@@ -148,7 +175,7 @@
  '(org-log-done t)
  '(package-selected-packages
    (quote
-    (linum-relative haskell-mode htmlize ensime use-package irony-eldoc flycheck-irony evil company-irony))))
+    (web-mode sublimity neotree linum-relative haskell-mode htmlize ensime use-package irony-eldoc flycheck-irony evil company-irony))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -157,4 +184,3 @@
  )
 
 ;;; init.el ends here
-
