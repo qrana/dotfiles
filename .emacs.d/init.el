@@ -164,6 +164,9 @@
         ;; Set indentation to 4.
         (set (make-local-variable 'sgml-basic-offset) 2)))
 
+(require 'yasnippet)
+(yas-global-mode 1)
+
 ;; Stuff added by Custonm
 
 (custom-set-variables
@@ -175,7 +178,7 @@
  '(org-log-done t)
  '(package-selected-packages
    (quote
-    (web-mode sublimity neotree linum-relative haskell-mode htmlize ensime use-package irony-eldoc flycheck-irony evil company-irony))))
+    (yasnippet-classic-snippets yasnippet-snippets yaml-mode web-mode sublimity neotree linum-relative haskell-mode htmlize ensime use-package irony-eldoc flycheck-irony evil company-irony))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
