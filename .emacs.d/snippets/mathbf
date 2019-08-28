@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: mathbf
+# key: mbld
+# --
+\mathbf{$1}$2
