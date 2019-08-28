@@ -46,9 +46,13 @@
 (load-theme 'material t)
 
 ;; Install elpy (python package) if not installed and enable it
+(unless (package-installed-p 'elpy)
+  (package-install 'elpy))
 (elpy-enable)
 
 ;; Enable evil
+(unless (package-installed-p 'evil)
+  (package-install 'evil))
 (use-package evil
   :demand)
 (evil-mode 1)
@@ -61,11 +65,15 @@
 (setq org-log-done t)
 
 ;; Enable irony backend
+(unless (package-installed-p 'irony)
+  (package-install 'irony))
 (use-package irony
+  :ensure t
   :config
   (progn
     ;; If irony server was never installed, install it.
-    (unless (irony--find-server-executable) (call-interactively #'irony-install-server))
+    (unless (irony--find-server-executable)
+      (call-interactively #'irony-install-server))
 
     (add-hook 'c++-mode-hook 'irony-mode)
     (add-hook 'c-mode-hook 'irony-mode)
@@ -77,7 +85,18 @@
     (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
   ))
 
+;; Enable company (code completition)
+(require 'company)
+(unless (package-installed-p 'company)
+  (package-install 'company))
+(progn
+  (add-hook 'after-init-hook 'global-company-mode)
+  (global-set-key (kbd "M-/") 'company-complete-common-or-cycle)
+  (setq company-idle-delay 0))
+
 ;; Use irony with company to get code completion.
+(unless (package-installed-p 'company-irony)
+  (package-install 'company-irony))
 (use-package company-irony
   :requires company irony
   :config
@@ -92,29 +111,26 @@
     (eval-after-load 'flycheck '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))))
 
 ;; Eldoc shows argument list of the function you are currently writing in the echo area.
+(unless (package-installed-p 'irony-eldoc)
+  (package-install 'irony-eldoc))
 (use-package irony-eldoc
   :requires eldoc irony
   :config
   (progn
     (add-hook 'irony-mode-hook #'irony-eldoc)))
 
-;; Enable company (code completition)
-(require 'company)
-(progn
-  (add-hook 'after-init-hook 'global-company-mode)
-  (global-set-key (kbd "M-/") 'company-complete-common-or-cycle)
-  (setq company-idle-delay 0))
-
 ;; Enable flycheck (syntx checker)
+(unless (package-installed-p 'flycheck)
+  (package-install 'flycheck))
 (require 'flycheck
   :config
   (progn
     (global-flycheck-mode)))
 
 ;; Enable ensime - scala static checker
-(use-package ensime
-  :ensure t
-  :pin melpa-stable)
+;; (use-package ensime
+;;   :ensure t
+;;   :pin melpa-stable)
 
 ;; Install matlab-mode if not installed and enable it
 (unless (package-installed-p 'matlab-mode)
@@ -127,10 +143,14 @@
 
 
 ;; Enable neotree
+(unless (package-installed-p 'neotree)
+  (package-install 'neotree))
 (use-package neotree)
 (global-set-key [f8] 'neotree-toggle)
 
 ;; Sublime style
+(unless (package-installed-p 'sublimity)
+  (package-install 'sublimity))
 (use-package sublimity)
 (use-package sublimity-scroll)
 (use-package sublimity-map)
@@ -154,6 +174,8 @@
 (global-whitespace-mode t)
 
 ;; Relative line numbers
+(unless (package-installed-p 'linum-relative)
+  (package-install 'linum-relative))
 (require 'linum-relative)
 (linum-mode)
 (linum-relative-global-mode)
@@ -174,6 +196,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(delete-selection-mode nil)
  '(org-babel-load-languages (quote ((emacs-lisp . t) (calc . t))))
  '(org-log-done t)
  '(package-selected-packages
